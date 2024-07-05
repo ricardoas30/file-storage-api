@@ -31,7 +31,19 @@ Uma API de Upload e Download de arquivos, utilizando Java Spring Boot.
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `fileName`      | `multipart` | **Obrigatório**. Arquivo a ser enviado (foto.png) |
+| `fileName`      | `multipart/form-data` | **Obrigatório**. Arquivo a ser enviado (foto.png) |
+
+
+#### Deletar um arquivo
+
+```http
+  POST /api/files/delete
+```
+
+| Parâmetro   | Tipo       | Descrição                                          |
+| :---------- | :--------- |:---------------------------------------------------|
+| `fileName`      | `multipart/form-data` | **Obrigatório**. Arquivo a ser deletado (foto.png) |
+
 
 ## Deploy
 

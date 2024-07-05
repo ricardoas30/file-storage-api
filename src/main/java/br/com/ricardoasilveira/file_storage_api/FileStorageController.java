@@ -56,6 +56,27 @@ public class FileStorageController {
     }
 
     /**
+     * Método responsável por deletar um arquivo
+     * @param fileName
+     * @param request
+     * @return
+     * @throws MalformedURLException
+     */
+    @DeleteMapping("/delete/{fileName:.+}")
+    public ResponseEntity<String> deleteFile(@PathVariable String fileName, HttpServletRequest request) throws MalformedURLException {
+        Path filePath = fileStorageLocation.resolve(fileName).normalize();
+        Resource resource = new UrlResource(filePath.toUri());
+
+        try {
+            request.getServletContext().getMimeType(String.valueOf(resource.getFile().delete()));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok("Arquivo " + resource.getFilename().toString() + " deletado com sucesso !");
+    }
+
+    /**
      * Método responsável pelo download
      * @param fileName
      * @param request
