@@ -44,16 +44,56 @@ Uma API de Upload e Download de arquivos, utilizando Java Spring Boot.
 | :---------- | :--------- |:---------------------------------------------------|
 | `fileName`      | `multipart/form-data` | **Obrigatório**. Arquivo a ser deletado (foto.png) |
 
+## Deploy Docker
 
-## Deploy
+1.Certifique-se de que você tenha o Docker instalado em sua máquina. Você pode baixar e instalar o Docker a partir do site oficial: https://www.docker.com/products/docker-desktop
 
-Para fazer o deploy desse projeto rode
-
-```bash
-  ./mvnw clean package
-```
-Executar
+2.Adicione o plugin Dockerfile Maven ao seu arquivo pom.xml para criar a imagem Docker do seu aplicativo Spring Boot. Aqui está um exemplo de como você pode configurar o plugin no pom.xml:
 
 ```bash
-  java -jar ./target/file-storage-api.jar
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>dockerfile-maven-plugin</artifactId>
+            <version>1.4.10</version>
+            <executions>
+                <execution>
+                    <id>build-image</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>build</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <repository>nome-do-repositorio</repository>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 ```
+
+3.Criar um arquivo Dockerfile na raiz do seu projeto Spring Boot para definir como a imagem do contêiner Docker será construída. Aqui está um exemplo de um Dockerfile básico:
+
+
+```bash
+FROM openjdk:17.0.2-jdk
+WORKDIR /app
+COPY target/sua-aplicacao.jar app.jar
+CMD ["java", "-jar", "app.jar"]
+```
+
+4.Certifique-se de substituir "sua-aplicacao.jar" pelo nome do arquivo JAR gerado após a build do seu projeto Spring Boot. Execute o comando Maven para construir a imagem Docker da sua aplicação com o plugin Dockerfile Maven:
+
+```bash
+mvn clean package
+```
+
+5.Por fim, execute o contêiner Docker localmente com o comando abaixo, substituindo "nome-da-imagem" pelo nome da imagem que você definiu no plugin Dockerfile Maven:
+
+```bash
+docker run -p 8080:8080 nome-da-imagem
+```
+
+Pronto, agora sua aplicação Spring Boot deve estar sendo executada em um contêiner Docker localmente. Você pode acessá-la em http://localhost:8080.
