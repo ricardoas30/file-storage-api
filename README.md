@@ -13,19 +13,19 @@ Uma API de Upload e Download de arquivos, utilizando Java Spring Boot.
 
 #### Retorna uma lista de arquivos
 
-```http
+```
   GET /api/files/list
 ```
 
 #### Download de um arquivo específico
 
-```http
+```
   GET /api/files/download/your-file-name.txt
 ```
 
 #### Upload do arquivo
 
-```http
+```
   POST /api/files/upload
 ```
 
@@ -36,7 +36,7 @@ Uma API de Upload e Download de arquivos, utilizando Java Spring Boot.
 
 #### Deletar um arquivo
 
-```http
+```
   POST /api/files/delete
 ```
 
